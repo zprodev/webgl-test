@@ -21,14 +21,24 @@ const fragShader = GLUtility.createShader(gl, gl.FRAGMENT_SHADER, defFrag);
 const program = GLUtility.createProgram(gl, vartShader, fragShader);
 
 const position = [
-  -1, -1,
-  0, 1,
-  1, 0,
+  -0.9,  0.9,
+   0.9,  0.9,
+  -0.9, -0.9,
+   0.9, -0.9,
 ];
+
+const index = [
+  0, 1, 2,
+  1, 2, 3
+];
+
 const positionLocation = gl.getAttribLocation(program, 'position');
 const positionStride = 2;
 
 gl.bindBuffer(gl.ARRAY_BUFFER, GLUtility.createVBO(gl, position));
 gl.enableVertexAttribArray(positionLocation);
 gl.vertexAttribPointer(positionLocation, positionStride, gl.FLOAT, false, 0, 0);
-gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, GLUtility.createIBO(gl, index));
+gl.drawElements(gl.TRIANGLES, index.length, gl.UNSIGNED_SHORT, 0);
+
